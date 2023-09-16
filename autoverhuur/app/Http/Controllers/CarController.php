@@ -30,13 +30,16 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'merk' => 'required|string|max:255',
+            'type' => 'required|string',
+            'bouwjaar' => 'required|numeric',
+        ]);
+
         $auto = new Car;
-        $merk = $request->merk;
-        $type = $request->type;
-        $bouwjaar = $request->bouwjaar;
-        $auto->merk = $merk;
-        $auto->type = $type;
-        $auto->bouwjaar = $bouwjaar;
+        $auto->merk = $validatedData['merk'];
+        $auto->type = $validatedData['type'];
+        $auto->bouwjaar = $validatedData['bouwjaar'];
         $auto->save();
         return redirect('index');
     }
@@ -44,9 +47,10 @@ class CarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($autonummer)
     {
-        //
+        $autonummer = car::where('autonummer', $autonummer)->get();
+        return view('detail', ['leenautos' => $autonummer]);
     }
 
     /**
@@ -63,13 +67,17 @@ class CarController extends Controller
      */
     public function update(Request $request, $autonummer)
     {
+        $validatedData = $request->validate([
+            'merk' => 'required|string|max:255',
+            'type' => 'required|string',
+            'bouwjaar' => 'required|numeric',
+        ]);
+
         $auto = Car::find($autonummer);
-        $merk = $request->merk;
-        $type = $request->type;
-        $bouwjaar = $request->bouwjaar;
-        $auto->merk = $merk;
-        $auto->type = $type;
-        $auto->bouwjaar = $bouwjaar;
+        $auto = new Car;
+        $auto->merk = $validatedData['merk'];
+        $auto->type = $validatedData['type'];
+        $auto->bouwjaar = $validatedData['bouwjaar'];
         $auto->update();
         return redirect('index');
     }

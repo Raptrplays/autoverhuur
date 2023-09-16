@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="update/{autonummer}" method="POST">
+    <form action="{{ url('edit/update/' . $auto->autonummer) }}" method="POST">
         @csrf
         @method('put')
         <div class="form-group">

@@ -9,10 +9,10 @@
 <body>
 
     @foreach ($leenautos as $leenauto)
-        {{ $leenauto->merk }}, {{ $leenauto->type }}, {{ $leenauto->bouwjaar }} 
+        {{ $leenauto->merk }} {{ $leenauto->type }}, {{ $leenauto->bouwjaar }} 
         <a href="{{ url('edit/' . $leenauto->autonummer) }}">Edit</a> 
 
-        <form action="index/{autonummer}" method="post">
+        <form action="{{ url('delete/' . $leenauto->autonummer) }}" method="post">
           @csrf
           @method('delete')
           <button type="submit" class="btn btn-primary">
